@@ -10,7 +10,7 @@ from utils.prompts import get_humanize_prompt, ANALYSIS_PROMPT
 
 logger = logging.getLogger(__name__)
 
-_GEMINI_MODEL = "gemini-2.0-flash"
+_GEMINI_MODEL = "gemini-2.5-flash"
 
 
 def _make_client(api_key: str) -> genai.Client:
