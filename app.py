@@ -2,16 +2,20 @@
 
 import io
 import logging
+import os
 import sys
-from pathlib import Path
 from typing import Optional
 
 import streamlit as st
 
-# ── path setup ──────────────────────────────────────────────────────────────
-ROOT = Path(__file__).parent
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+# ── path setup (works locally AND on Streamlit Cloud) ───────────────────────
+# On Streamlit Cloud, app.py lives at /mount/src/<repo>/app.py and the cwd
+# may differ. We resolve the directory containing this file and insert it at
+# the front of sys.path so that `core` and `utils` packages are always found.
+_HERE = os.path.dirname(os.path.abspath(__file__))
+for _p in (_HERE, os.getcwd()):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 
 from core.extractor import extract_text
 from core.humanizer import humanize_text, get_ai_explanation
